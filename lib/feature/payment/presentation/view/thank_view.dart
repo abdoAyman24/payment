@@ -13,7 +13,7 @@ class ThankView extends StatelessWidget {
       appBar: buildAppBar(),
       body: Transform.translate(
         offset: Offset(0, -10.h),
-        child: ThankViewBody(totalPrice: totalPrice,),
+        child: ThankViewBody(totalPrice: totalPrice),
       ),
     );
   }

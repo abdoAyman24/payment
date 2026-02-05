@@ -5,9 +5,7 @@ import 'package:payment/core/utils/app_icon.dart';
 import 'package:payment/core/utils/app_text_styles.dart';
 
 class MasterCardWidget extends StatelessWidget {
-  const MasterCardWidget({
-    super.key,
-  });
+  const MasterCardWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +14,7 @@ class MasterCardWidget extends StatelessWidget {
       height: 73.h,
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -26,9 +22,7 @@ class MasterCardWidget extends StatelessWidget {
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(Assets.imagesMasterCard),
-              ],
+              children: [SvgPicture.asset(Assets.imagesMasterCard)],
             ),
             const SizedBox(width: 13),
             Column(

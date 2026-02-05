@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:payment/core/utils/app_color.dart';
 
 class CheckIcon extends StatelessWidget {
-  const CheckIcon({
-    super.key,
-  });
+  const CheckIcon({super.key});
 
   @override
   Widget build(BuildContext context) {

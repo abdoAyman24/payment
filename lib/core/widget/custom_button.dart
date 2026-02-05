@@ -4,9 +4,10 @@ import 'package:payment/core/utils/app_color.dart';
 import 'package:payment/core/utils/app_text_styles.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.text, this.onTap});
+  const CustomButton({super.key, required this.text, this.onTap,  this.isLoading=false});
   final String text;
   final Function()? onTap;
+  final bool isLoading;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -18,7 +19,7 @@ class CustomButton extends StatelessWidget {
           color: AppColor.primary,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Center(child: Text(text, style: AppText.medium22)),
+        child: Center(child:isLoading?CircularProgressIndicator() :Text(text, style: AppText.medium22)),
       ),
     );
   }

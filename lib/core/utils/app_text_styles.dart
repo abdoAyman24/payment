@@ -9,7 +9,7 @@ abstract class AppText {
     fontSize: 22,
     fontWeight: FontWeight.w500,
   );
-   static const TextStyle regular16 = TextStyle(
+  static const TextStyle regular16 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
   );
