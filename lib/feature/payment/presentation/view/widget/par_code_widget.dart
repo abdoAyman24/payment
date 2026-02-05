@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:payment/core/utils/app_text_styles.dart';
 
 class ParCodeWidget extends StatelessWidget {
-  const ParCodeWidget({
-    super.key,
-  });
+  const ParCodeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +22,7 @@ class ParCodeWidget extends StatelessWidget {
               height: 58.h,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    width: 1.50,
-                    color: const Color(0xFF34A853),
-                  ),
+                  side: BorderSide(width: 1.50, color: const Color(0xFF34A853)),
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),

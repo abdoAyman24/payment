@@ -3,7 +3,6 @@ import 'package:payment/feature/payment/data/model/produt_model.dart';
 
 class Productlist {
   static final List<ProductModel> productList = [
-    
     ProductModel(
       id: 0,
       name: 'item1',
@@ -84,11 +83,12 @@ class Productlist {
     }
     return discount;
   }
+
   static double getTotalPriceAfterDiscount() {
     double totalPrice = 0;
     for (var element in productList) {
       totalPrice = totalPrice + element.price;
     }
-    return totalPrice-getDiscount();
+    return totalPrice - getDiscount();
   }
 }
