@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment/core/widget/custom_button.dart';
@@ -5,6 +7,7 @@ import 'package:payment/feature/payment/data/model/payment_intent_input_model.da
 import 'package:payment/feature/payment/data/model/product_List.dart';
 import 'package:payment/feature/payment/presentation/manager/stripe_cubit/stripe_cubit.dart';
 import 'package:payment/feature/payment/presentation/view/thank_view.dart';
+import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 
 class CustomButtomBlocConsumer extends StatelessWidget {
   const CustomButtomBlocConsumer({super.key});
@@ -35,8 +38,12 @@ class CustomButtomBlocConsumer extends StatelessWidget {
               paymentIntentInputModel: PaymentIntentInputModel(
                 amount: Productlist.getTotalPriceAfterDiscount(),
                 currency: 'USD',
+                customerId:'cus_TwK3K9lUpPyURY',
               ),
             );
+
+           
+
           },
           isLoading: state is StripeLoad,
         );

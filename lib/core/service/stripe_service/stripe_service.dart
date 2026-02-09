@@ -1,16 +1,34 @@
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:payment/core/service/api_key.dart';
+import 'package:payment/core/service/payment_api_key.dart';
 import 'package:payment/core/service/api_service.dart';
+import 'package:payment/feature/payment/data/model/customer_model/customer_model.dart';
+import 'package:payment/feature/payment/data/model/ephemeral_key/ephemeral_key.dart';
+import 'package:payment/feature/payment/data/model/initPaymentIntentInputModel.dart';
 import 'package:payment/feature/payment/data/model/payment_intent_input_model.dart';
 import 'package:payment/feature/payment/data/model/payment_intent_model/payment_intent_model.dart';
+import 'package:payment/feature/payment/data/model/user_model.dart';
 
 class StriprService {
   final ApiService apiService;
 
   StriprService({required this.apiService});
-  //1- paymentIntenetObject createPaymentIntent(amount,currency)
-  //2- initPaymentSheet(paymentIntentModel)
-  //3- presentPaymentSheet
+  //1- create CustomerObject(name ,email)  this to add user data to my stripe account and get CustomerId
+  //2- paymentIntenetObject createPaymentIntent(paymentIntentInpotModel)
+  //3- create Ephemeral key(CustomerId)
+  //3- initPaymentSheet(paymentIntentModel)
+  //4- presentPaymentSheet
+
+  // 1 - create customerId
+  // do this method when create an account
+  Future<CustomerModel> createCustomerId({required UserModel userModel}) async {
+    var response = await apiService.post(
+      url: 'https://api.stripe.com/v1/customers',
+      body: userModel.toJson(),
+      token: PaymentApiKey.stripeSecretKey,
+    );
+    CustomerModel customerModel = CustomerModel.fromJson(response.data);
+    return customerModel;
+  }
 
   //////1- paymentIntenetObject createPaymentIntent(amount,currency)///////////////
   Future<PaymentIntentModel> createPaymentIntent({
@@ -19,7 +37,7 @@ class StriprService {
     var response = await apiService.post(
       url: 'https://api.stripe.com/v1/payment_intents',
       body: paymentIntentInputModel.toJson(),
-      token: ApiKey.stripeSecretKey,
+      token: PaymentApiKey.stripeSecretKey,
     );
     PaymentIntentModel paymentIntentModel = PaymentIntentModel.fromJson(
       response.data,
@@ -27,13 +45,34 @@ class StriprService {
     return paymentIntentModel;
   }
 
+  //3-create Ephemeral key
+  Future<EphemeralKey> createEphemeralKey({required String customerId}) async {
+    var response = await apiService.post(
+      url: 'https://api.stripe.com/v1/ephemeral_keys',
+      body: {'customer': customerId},
+      token: PaymentApiKey.stripeSecretKey,
+      headers: {
+        'Authorization': "Bearer ${PaymentApiKey.stripeSecretKey}",
+        'Stripe-Version': '2023-08-16',
+      },
+    );
+    EphemeralKey ephemeralKey = EphemeralKey.fromJson(response.data);
+    return ephemeralKey;
+  }
+
   ///////////  2- initPaymentSheet(paymentIntentModel) ////////////////////
-  Future initPaymentSheet({required String paymentIntentClientSecret}) async {
+  Future initPaymentSheet({
+    required Initpaymentintentinputmodel initpaymentintentinputmodel,
+  }) async {
     await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         // Main params
-        paymentIntentClientSecret: paymentIntentClientSecret,
+        paymentIntentClientSecret:
+            initpaymentintentinputmodel.paymentIntentClientSecret,
         merchantDisplayName: 'Flutter Stripe Abdelftah',
+        customerEphemeralKeySecret:
+            initpaymentintentinputmodel.customerEphemeralKeySecret,
+        customerId: initpaymentintentinputmodel.customerId,
       ),
     );
   }
@@ -42,15 +81,26 @@ class StriprService {
   Future displayPaymentSheet() async {
     await Stripe.instance.presentPaymentSheet();
   }
-// this Method to make a all payment Flow in the UP
+
+  // this Method to make a all payment Flow in the UP
   Future makePayment({
     required PaymentIntentInputModel paymentIntentInputModel,
   }) async {
     PaymentIntentModel paymentIntentModel = await createPaymentIntent(
       paymentIntentInputModel: paymentIntentInputModel,
     );
+    EphemeralKey ephemeralKey = await createEphemeralKey(
+      customerId: paymentIntentInputModel.customerId,
+    );
+
+    Initpaymentintentinputmodel initpaymentintentinputmodel =
+        Initpaymentintentinputmodel(
+          paymentIntentClientSecret: paymentIntentModel.clientSecret!,
+          customerId: paymentIntentInputModel.customerId,
+          customerEphemeralKeySecret: ephemeralKey.secret!,
+        );
     await initPaymentSheet(
-      paymentIntentClientSecret: paymentIntentModel.clientSecret!,
+      initpaymentintentinputmodel: initpaymentintentinputmodel,
     );
     await displayPaymentSheet();
   }

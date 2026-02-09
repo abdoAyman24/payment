@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:payment/core/helper/cache_helper.dart';
 import 'package:payment/core/helper/on_generate_route.dart';
-import 'package:payment/core/service/api_key.dart';
+import 'package:payment/core/service/payment_api_key.dart';
 import 'package:payment/core/service/service_locator.dart';
 import 'package:payment/core/utils/app_color.dart';
+
 import 'package:payment/feature/payment/presentation/view/cart_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setUpGetIt();
-  Stripe.publishableKey = ApiKey.stripePublishKey;
+  Stripe.publishableKey = PaymentApiKey.stripePublishKey;
+  await CacheHelper().init();
   await ScreenUtil.ensureScreenSize();
+  await CacheHelper.saveData(
+    key: PaymentApiKey.customerId,
+    value: PaymentApiKey.customerIdValue,
+  );
   runApp(const MyApp());
 }
 

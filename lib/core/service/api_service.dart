@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 
 class ApiService {
@@ -8,16 +7,17 @@ class ApiService {
 
   Future<Response> post({
     required String url,
-    required Map<String,dynamic> body,
+    required Map<String, dynamic> body,
     required String token,
-    String? contentType,
+    Map<String ,String>? headers,
   }) async {
     var respons = await dio.post(
       url,
       data: body,
       options: Options(
-        contentType:Headers.formUrlEncodedContentType,
-        headers: {'Authorization': "Bearer $token"}),
+        contentType: Headers.formUrlEncodedContentType,
+        headers:headers?? {'Authorization': "Bearer $token"},
+      ),
     );
 
     return respons;

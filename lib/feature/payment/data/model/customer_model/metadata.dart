@@ -3,11 +3,11 @@ class Metadata {
 
   factory Metadata.fromJson(Map<String, dynamic> json) {
     // TODO: implement fromJson
-    return Metadata();
+    throw UnimplementedError('Metadata.fromJson($json) is not implemented');
   }
 
   Map<String, dynamic> toJson() {
     // TODO: implement toJson
-    return {};
+    throw UnimplementedError();
   }
 }

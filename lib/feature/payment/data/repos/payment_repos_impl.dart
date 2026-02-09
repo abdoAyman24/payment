@@ -13,7 +13,7 @@ class PaymentReposImpl extends PaymentRepos {
     required PaymentIntentInputModel paymentIntentInputModel,
   }) async {
     try {
-       await striprService.makePayment(
+      await striprService.makePayment(
         paymentIntentInputModel: paymentIntentInputModel,
       );
       return Right(null);

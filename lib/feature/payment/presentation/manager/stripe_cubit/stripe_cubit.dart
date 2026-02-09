@@ -18,6 +18,7 @@ class StripeCubit extends Cubit<StripeState> {
     var result = await paymentRepos.makePayment(
       paymentIntentInputModel: paymentIntentInputModel,
     );
+
     result.fold((l) {
       log(l.errorMessage);
       emit(StripeFailure(errorMessage: l.errorMessage));
