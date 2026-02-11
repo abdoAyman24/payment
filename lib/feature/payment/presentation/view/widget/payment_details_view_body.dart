@@ -19,7 +19,11 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(child: PaymentMethodListView()),
+          SliverToBoxAdapter(child: PaymentMethodListView(
+            // to avoid need change payment method constructor
+            chnagePaymentMethod: ({required index}) {
+            
+          },)),
           SliverToBoxAdapter(
             child: Paymentview(
               formKey: formKey,

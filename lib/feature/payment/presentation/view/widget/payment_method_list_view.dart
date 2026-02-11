@@ -4,8 +4,8 @@ import 'package:payment/core/utils/app_icon.dart';
 import 'package:payment/feature/payment/presentation/view/widget/payment_method_item.dart';
 
 class PaymentMethodListView extends StatefulWidget {
-  const PaymentMethodListView({super.key});
-
+  const PaymentMethodListView({super.key, required this.chnagePaymentMethod});
+  final Function({required int index}) chnagePaymentMethod;
   @override
   State<PaymentMethodListView> createState() => _PaymentMethodListViewState();
 }
@@ -29,6 +29,7 @@ class _PaymentMethodListViewState extends State<PaymentMethodListView> {
             child: GestureDetector(
               onTap: () {
                 activeIndex = index;
+                widget.chnagePaymentMethod(index: activeIndex);
                 setState(() {});
               },
               child: PaymentMethodItem(

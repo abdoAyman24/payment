@@ -1,11 +1,11 @@
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:payment/core/service/payment_api_key.dart';
 import 'package:payment/core/service/api_service.dart';
-import 'package:payment/feature/payment/data/model/customer_model/customer_model.dart';
-import 'package:payment/feature/payment/data/model/ephemeral_key/ephemeral_key.dart';
-import 'package:payment/feature/payment/data/model/initPaymentIntentInputModel.dart';
-import 'package:payment/feature/payment/data/model/payment_intent_input_model.dart';
-import 'package:payment/feature/payment/data/model/payment_intent_model/payment_intent_model.dart';
+import 'package:payment/feature/payment/data/model/stripe_model/customer_model/customer_model.dart';
+import 'package:payment/feature/payment/data/model/stripe_model/ephemeral_key/ephemeral_key.dart';
+import 'package:payment/feature/payment/data/model/stripe_model/initPaymentIntentInputModel.dart';
+import 'package:payment/feature/payment/data/model/stripe_model/payment_intent_input_model.dart';
+import 'package:payment/feature/payment/data/model/stripe_model/payment_intent_model/payment_intent_model.dart';
 import 'package:payment/feature/payment/data/model/user_model.dart';
 
 class StriprService {

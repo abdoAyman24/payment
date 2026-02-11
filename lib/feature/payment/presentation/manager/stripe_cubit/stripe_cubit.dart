@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:payment/feature/payment/data/model/payment_intent_input_model.dart';
+import 'package:payment/feature/payment/data/model/stripe_model/payment_intent_input_model.dart';
 import 'package:payment/feature/payment/domain/repos/payment_repos.dart';
 
 part 'stripe_state.dart';
